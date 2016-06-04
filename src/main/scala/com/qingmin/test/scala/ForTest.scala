@@ -17,7 +17,7 @@ object ForTest extends App{
     println(i)
   }
 
-  for(i<-"superman"){//遍历字符串
+  for(i<-"superman"){//遍历字符串`
     println(i)
   }
 }
