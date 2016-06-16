@@ -62,7 +62,7 @@ class Tiger2(param1:Boolean,params2:Int) extends cat{  //这一种写法由于�
   */
 
 abstract class ElementsNew{
-
+  def abcTest:Array[Int] = Array(1,2,3,4,5,6)
   def contents:Array[String]
   def height: Int = contents.length
   def width: Int =
@@ -70,8 +70,8 @@ abstract class ElementsNew{
 }
 
 class ArrayElementNew(conts:Array[String]) extends ElementsNew{
+  override def abcTest: Array[Int] = Array(1,2,3,4,5,6,7)
   def contents: Array[String] = conts
-
 }
 
 class LineElement(s:String) extends ArrayElementNew(Array(s)){
