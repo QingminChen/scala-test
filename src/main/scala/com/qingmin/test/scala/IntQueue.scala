@@ -34,7 +34,7 @@ object IntQueueObject extends App{
   biq.put(40)
   biq.remove()
   biq.put(50)
-  println(biq.get())
+  println(biq.get())  //结果是20
 
   val myQueue = new MyQueue()
   myQueue.put(10)
@@ -43,7 +43,27 @@ object IntQueueObject extends App{
   myQueue.put(40)
   myQueue.put(50)
   myQueue.put(60)
-  println(myQueue.get())
+  println(myQueue.get())    //结果是20
+
+  /**
+    * 以上这种写法还可以这样初始化
+    * */
+  val myQueue2 = new BasicIntQueue() with Doubling    //这里的写法是因为MyQueue本身当没有任何新代码实现的时候，我们可以这样写，并且那个括号也是可要可不要
+  myQueue2.put(100)
+  println(myQueue2.get())   //结果是200
+
+  val myQueue3 = new BasicIntQueue() with Filtering with Incrementing   //这里一定要注意那个混入的顺序，越靠近右侧的特质越先调用
+  myQueue3.put(-1)
+  myQueue3.put(0)
+  myQueue3.put(1)
+  println(myQueue3.get)   //结果是0
+
+
+  val myQueue4 = new BasicIntQueue() with Incrementing with Filtering
+  myQueue4.put(-1)
+  myQueue4.put(0)
+  myQueue4.put(1)
+  println(myQueue4.get()) //结果是1
 }
 
 /**
@@ -60,6 +80,18 @@ trait Doubling extends IntQueue{
       super.put(x*2)
   /**这里要注意这个只能在trait中使用，一旦放到子类BasicIntQueue里面是绝对不行的，编译不过，因为super里面的调用是动态绑定的，它混入到其它的类或者特质中，只有被定义的时候才会真正工作**/
    }
+}
+
+trait Filtering extends IntQueue{
+  abstract override def put(x:Int){
+    if(x>=0) super.put(x)
+  }
+}
+
+trait Incrementing extends IntQueue{
+  abstract override def put(x:Int){
+    super.put(x+1)
+  }
 }
 
 class MyQueue extends BasicIntQueue with Doubling{ //这里就是当子类MyQueue扩展了超类BasicIntQueue的时候，还要混入特质Doubling使用with

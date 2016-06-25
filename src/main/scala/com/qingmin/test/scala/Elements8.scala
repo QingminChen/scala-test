@@ -43,7 +43,7 @@ abstract class Elements8{
     if (height == 0) 0 else contents(0).length
 
   def above(that:Elements8):Elements8={
-    //new ArrayElement8(this.contents ++ that.contents)
+    //new ArrayElement8(this.contents ++ that.contents)    //这里好奇怪，这样写调用私有成员方法是不行的，但是竟然编译没报错
     Elements8.elem(this.contents ++ that.contents)
   }
 
@@ -58,11 +58,11 @@ abstract class Elements8{
 //      }
 //    )
     Elements8.elem(
-      for {
-              (line1,line2)<-this.contents zip that.contents
-            }yield {
-              line1 + line2
-            }
+        for {
+          (line1,line2)<-this.contents zip that.contents
+        }yield {
+          line1 + line2
+        }
     )
   }
 }
